@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RAG + MCP 智能 IT 运维 Agent Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail" aria-label="Demo navigation">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <div>
+            <strong>IT Ops Agent</strong>
+            <span>RAG / MCP / HITL</span>
+          </div>
+        </div>
+
+        <nav class="rail-nav" aria-label="Sections">
+          <a class="active" href="#demo">Demo</a>
+          <a href="#pipeline">Pipeline</a>
+          <a href="#controls">Controls</a>
+        </nav>
+
+        <div class="rail-metrics" aria-label="Project metrics">
+          <div>
+            <span>40%</span>
+            <small>L1 工单拦截目标</small>
+          </div>
+          <div>
+            <span>4</span>
+            <small>高频运维场景</small>
+          </div>
+          <div>
+            <span>HITL</span>
+            <small>高风险人工确认</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Local runnable prototype</p>
+            <h1>基于 RAG 与 MCP 的智能 IT 运维 Agent</h1>
+          </div>
+          <div class="status-strip" aria-label="System status">
+            <span><i class="dot ok"></i>Knowledge index ready</span>
+            <span><i class="dot warn"></i>HITL enabled</span>
+          </div>
+        </header>
+
+        <section class="hero-grid" id="demo">
+          <div class="command-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Agent console</p>
+                <h2>演示请求</h2>
+              </div>
+              <button class="icon-button" id="clearBtn" type="button" title="清空输入" aria-label="清空输入">
+                ×
+              </button>
+            </div>
+
+            <label class="query-label" for="queryInput">输入或选择一个运维请求</label>
+            <textarea id="queryInput" rows="4">帮我查询工单 INC-1001 的状态</textarea>
+
+            <div class="scenario-row" aria-label="Demo scenarios">
+              <button type="button" data-scenario="vpn">VPN 故障</button>
+              <button type="button" data-scenario="ticket">工单查询</button>
+              <button type="button" data-scenario="password">密码重置</button>
+              <button type="button" data-scenario="service">服务重启</button>
+            </div>
+
+            <div class="action-row">
+              <label class="switch">
+                <input id="approvalToggle" type="checkbox" />
+                <span></span>
+                自动批准高风险动作
+              </label>
+              <button class="primary-action" id="runBtn" type="button">
+                <span aria-hidden="true">▶</span>
+                运行 Agent
+              </button>
+            </div>
+          </div>
+
+          <div class="signal-map" id="pipeline" aria-label="Agent pipeline visualization">
+            <div class="packet-lane lane-one"><span></span></div>
+            <div class="packet-lane lane-two"><span></span></div>
+            <div class="stage router" data-stage="router">
+              <b>Prompt Router</b>
+              <small>意图识别</small>
+            </div>
+            <div class="stage rag" data-stage="rag">
+              <b>Hybrid RAG</b>
+              <small>BM25 + 向量</small>
+            </div>
+            <div class="stage rerank" data-stage="rerank">
+              <b>Rerank</b>
+              <small>专业片段重排</small>
+            </div>
+            <div class="stage mcp" data-stage="mcp">
+              <b>MCP Tools</b>
+              <small>工单 / IAM / 控制器</small>
+            </div>
+            <div class="stage hitl" data-stage="hitl">
+              <b>Human Check</b>
+              <small>高权限保护</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="result-grid" aria-live="polite">
+          <article class="result-panel span-two">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Response</p>
+                <h2>Agent 输出</h2>
+              </div>
+              <span class="badge" id="intentBadge">ticket_query</span>
+            </div>
+            <ol class="timeline" id="timeline"></ol>
+          </article>
+
+          <article class="result-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Citations</p>
+                <h2>RAG 引用</h2>
+              </div>
+              <span class="badge muted">Top 3</span>
+            </div>
+            <div class="citation-list" id="citationList"></div>
+          </article>
+
+          <article class="result-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Tool call</p>
+                <h2>MCP 执行计划</h2>
+              </div>
+              <span class="badge danger" id="riskBadge">low</span>
+            </div>
+            <div class="tool-card" id="toolCard"></div>
+          </article>
+        </section>
+
+        <section class="ops-band" id="controls">
+          <div>
+            <p class="eyebrow">Run locally</p>
+            <h2>本地运行命令</h2>
+          </div>
+          <div class="command-stack">
+            <code>conda activate it-ops-agent</code>
+            <code>python main.py --demo</code>
+            <code>python -m http.server 8000 --directory web</code>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
