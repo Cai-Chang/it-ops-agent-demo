@@ -1,5 +1,7 @@
 # 基于 RAG 与 MCP 协议的智能 IT 运维 Agent
 
+[在线演示页面](https://你的GitHub用户名.github.io/你的仓库名/) · [前端源码](web/index.html)
+
 这是一个可运行的本地原型，用来演示“专业技术手册可检索问答 + MCP 工具执行 + Human-in-the-loop 审批”的智能运维助手。
 
 ## 已实现能力
